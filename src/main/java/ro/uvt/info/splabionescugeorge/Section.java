@@ -8,10 +8,18 @@ public class Section implements Element {
 
     public Section(String title) { this.title = title; }
 
-    public void print() {
-        System.out.println(title);
+    public String getTitle() { return title; }
+
+    public void render() { System.out.println(title); }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+        acceptChildren(visitor);
+    }
+
+    protected void acceptChildren(Visitor visitor) {
         for (int i = 0; i < children.size(); i++) {
-            children.get(i).print();
+            children.get(i).accept(visitor);
         }
     }
 

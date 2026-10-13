@@ -2,24 +2,24 @@ package ro.uvt.info.splabionescugeorge;
 
 import java.util.ArrayList;
 
-public class Book {
-    private String title;
+public class Book extends Section {
     private ArrayList<Author> authors = new ArrayList<>();
-    private ArrayList<Element> content = new ArrayList<>();
 
-    public Book(String title) { this.title = title; }
+    public Book(String title) { super(title); }
 
     public void addAuthor(Author a) { authors.add(a); }
-    public void addContent(Element e) { content.add(e); }
+    public void addContent(Element e) { add(e); }
 
-    public void print() {
-        System.out.println("Book: " + title);
+    public void render() {
+        System.out.println("Book: " + getTitle());
         System.out.println("Authors:");
         for (int i = 0; i < authors.size(); i++) {
             authors.get(i).print();
         }
-        for (int i = 0; i < content.size(); i++) {
-            content.get(i).print();
-        }
+    }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+        acceptChildren(visitor);
     }
 }

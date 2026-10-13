@@ -12,13 +12,15 @@ public class Paragraph implements Element {
         this.alignStrategy = alignStrategy;
     }
 
-    public void print() {
+    public void render() {
         if (alignStrategy == null) {
             System.out.println("Paragraph: " + text);
         } else {
             alignStrategy.render(this, new Context(30));
         }
     }
+
+    public void accept(Visitor visitor) { visitor.visit(this); }
 
     public void add(Element e) { throw new UnsupportedOperationException("Paragraph is a leaf"); }
     public void remove(Element e) { throw new UnsupportedOperationException("Paragraph is a leaf"); }

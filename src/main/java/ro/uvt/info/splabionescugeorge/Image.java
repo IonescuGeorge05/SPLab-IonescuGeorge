@@ -5,7 +5,9 @@ public class Image implements Element {
 
     public Image(String url) { this.url = url; }
 
-    public void print() { System.out.println("Image with name:" + url); }
+    public void render() { System.out.println("Image with name:" + url); }
+
+    public void accept(Visitor visitor) { visitor.visit(this); }
 
     public void add(Element e) { throw new UnsupportedOperationException("Image is a leaf"); }
     public void remove(Element e) { throw new UnsupportedOperationException("Image is a leaf"); }

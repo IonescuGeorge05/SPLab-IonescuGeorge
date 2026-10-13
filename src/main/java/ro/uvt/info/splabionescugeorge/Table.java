@@ -5,7 +5,9 @@ public class Table implements Element {
 
     public Table(String title) { this.title = title; }
 
-    public void print() { System.out.println("Table with title:" + title); }
+    public void render() { System.out.println("Table with title:" + title); }
+
+    public void accept(Visitor visitor) { visitor.visit(this); }
 
     public void add(Element e) { throw new UnsupportedOperationException("Table is a leaf"); }
     public void remove(Element e) { throw new UnsupportedOperationException("Table is a leaf"); }

@@ -1,8 +1,20 @@
 package ro.uvt.info.splabionescugeorge;
 
-public class TableOfContents implements Element {
+import java.util.ArrayList;
 
-    public void print() { System.out.println("Table of contents"); }
+public class TableOfContents implements Element {
+    private ArrayList<String> entries = new ArrayList<>();
+
+    public void addEntry(String entry) { entries.add(entry); }
+
+    public void render() {
+        System.out.println("Table of contents");
+        for (int i = 0; i < entries.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + entries.get(i));
+        }
+    }
+
+    public void accept(Visitor visitor) { visitor.visit(this); }
 
     public void add(Element e) { throw new UnsupportedOperationException("TableOfContents is a leaf"); }
     public void remove(Element e) { throw new UnsupportedOperationException("TableOfContents is a leaf"); }
