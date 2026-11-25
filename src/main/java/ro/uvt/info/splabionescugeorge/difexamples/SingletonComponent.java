@@ -1,4 +1,4 @@
-package ro.uvt.info.splabionescugeorge.difexample   gs;
+package ro.uvt.info.splabionescugeorge.difexamples;
 import org.springframework.stereotype.Component;
 
 @Component
