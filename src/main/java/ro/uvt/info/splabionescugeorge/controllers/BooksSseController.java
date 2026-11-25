@@ -19,7 +19,11 @@ public class BooksSseController {
     @GetMapping("/books-sse")
     public ResponseBodyEmitter getBooksSse() {
         final SseEmitter emitter = new SseEmitter(0L);
-        allBooksSubject.attach(new SseObserver(emitter));
+        final SseObserver observer = new SseObserver(emitter);
+        allBooksSubject.attach(observer);
+        emitter.onCompletion(() -> allBooksSubject.detach(observer));
+        emitter.onTimeout(() -> allBooksSubject.detach(observer));
+        emitter.onError(e -> allBooksSubject.detach(observer));
         return emitter;
     }
 }

@@ -18,8 +18,8 @@ public class SseObserver implements Observer {
     public void update(Book book) {
         try {
             emitter.send(book, MediaType.APPLICATION_JSON);
-        } catch (IOException e) {
-            emitter.completeWithError(e);
+        } catch (IOException | IllegalStateException e) {
+            // client disconnected; the emitter callbacks detach this observer
         }
     }
 }
