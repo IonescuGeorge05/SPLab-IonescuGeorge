@@ -1,0 +1,57 @@
+Proiect individual - Study Planner (planificator de studiu pentru un semestru)
+
+Tema
+----
+Aplicatie web pentru organizarea materiei dintr-un semestru. Datele sunt pastrate
+ca o structura arborescenta:
+
+  Semestru -> Curs -> Capitol -> [Notita, Resursa (link), Exercitiu, Sesiune de studiu (minute)]
+
+Exemplu:
+  Semestrul 1 2026/2027
+    Proiectare Software
+      Capitolul 1 - Composite
+        Notita: "Leaf si Composite implementeaza aceeasi interfata"
+        Resursa: https://refactoring.guru/design-patterns/composite
+        Exercitiu: "Modelati un sistem de fisiere" (rezolvat: da)
+        Sesiune de studiu: 90 min
+
+Functionalitati
+---------------
+- <add>     adaugare semestru / curs / capitol / element frunza sub orice nod
+- <view>    vizualizarea arborelui complet sau doar a unui subarbore (de ex. un curs)
+- <summary> rezumat calculat pentru orice nod: timp total de studiu (minute),
+            numar de capitole, exercitii rezolvate / totale, numar de notite si resurse
+- editare si stergere noduri (CRUD complet)
+
+Tehnologii
+----------
+- RESTful API cu Spring Boot
+- baza de date H2 prin Spring Data JPA
+- interfata web simpla: HTML + JavaScript (fetch catre API)
+
+Design patterns (reluate din book project)
+------------------------------------------
+- Composite  nodurile arborelui (Semestru, Curs, Capitol si elementele frunza)
+- Visitor    calculul pentru <summary> si afisarea arborelui
+- Command    operatiile apelate din controller (add, view, summary)
+- Observer   interfata web primeste prin Server-Sent Events nodurile nou adaugate
+
+Endpoint-uri planificate
+------------------------
+  GET    /semesters             lista semestrelor
+  POST   /semesters             adauga un semestru
+  GET    /nodes/{id}            subarborele care porneste din nodul {id}
+  POST   /nodes/{id}/children   adauga un copil nodului {id}
+  PUT    /nodes/{id}            modifica un nod
+  DELETE /nodes/{id}            sterge un nod impreuna cu subarborele lui
+  GET    /nodes/{id}/summary    rezumatul nodului {id}
+
+Organizare git
+--------------
+Cate un branch pentru fiecare functionalitate, apoi merge in main:
+  proj-model     modelul arborelui (Composite) si entitatile JPA
+  proj-add       endpoint-uri pentru adaugare
+  proj-view      endpoint-uri pentru vizualizare
+  proj-summary   Visitor + endpoint pentru rezumat
+  proj-ui        interfata web
